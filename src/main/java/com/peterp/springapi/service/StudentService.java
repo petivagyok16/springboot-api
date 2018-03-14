@@ -1,6 +1,7 @@
 package com.peterp.springapi.service;
 
 import com.peterp.springapi.dao.StudentDao;
+import com.peterp.springapi.dao.StudentRepository;
 import com.peterp.springapi.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,10 +15,12 @@ import java.util.UUID;
 public class StudentService {
 
 	private final StudentDao studentDao;
+	private final StudentRepository studentRepository;
 
 	@Autowired
-	public StudentService(@Qualifier("fakeDao") StudentDao studentDao) {
+	public StudentService(@Qualifier("fakeDao") StudentDao studentDao, final StudentRepository studentRepository) {
 		this.studentDao = studentDao;
+		this.studentRepository = studentRepository;
 	}
 
 
