@@ -15,19 +15,20 @@ import java.util.UUID;
 public class StudentService {
 
 	private final StudentDao studentDao;
-//	private final StudentRepository studentRepository;
+	private final StudentRepository studentRepository;
 
 	@Autowired
-	public StudentService(@Qualifier("fakeDao") StudentDao studentDao) {
+	public StudentService(@Qualifier("fakeDao") StudentDao studentDao, StudentRepository studentRepository) {
 		this.studentDao = studentDao;
-		// this.studentRepository = studentRepository;
+		this.studentRepository = studentRepository;
 	}
 
 
-	public int persistNewStudent(UUID studentId, Student student) {
+	public Student addNewStudent(UUID studentId, Student student) {
 		UUID studentUid = studentId == null ? UUID.randomUUID() : studentId;
 		student.setId(studentUid);
-		return this.studentDao.insertNewStudent(student);
+		return this.studentRepository.save(student);
+//		return this.studentDao.insertNewStudent(student);
 	}
 
 	public Student getStudentById(UUID studentId) {
@@ -35,7 +36,7 @@ public class StudentService {
 	}
 
 	public List<Student> getAllStudents() {
-		return this.studentDao.selectAllStudents();
+		return this.studentRepository.findAll();
 	}
 
 	public int updateStudentById(UUID studentId, Student newStudent) {

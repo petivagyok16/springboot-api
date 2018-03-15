@@ -40,7 +40,7 @@ public class StudentController {
 					produces = MediaType.APPLICATION_JSON_VALUE
 	)
 	public void insertNewStudent(@RequestBody Student student) {
-		this.studentService.persistNewStudent(null, student);
+		this.studentService.addNewStudent(null, student);
 	}
 
 	@RequestMapping(

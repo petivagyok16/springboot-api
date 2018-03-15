@@ -1,13 +1,15 @@
 package com.peterp.springapi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-// import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
 
 public class Student {
 
+	@Id
 	public UUID id;
+
 	private final String firstName;
 	private final String lastName;
 	private final String course;
