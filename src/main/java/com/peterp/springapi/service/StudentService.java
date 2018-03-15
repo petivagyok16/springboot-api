@@ -15,12 +15,12 @@ import java.util.UUID;
 public class StudentService {
 
 	private final StudentDao studentDao;
-	private final StudentRepository studentRepository;
+//	private final StudentRepository studentRepository;
 
 	@Autowired
-	public StudentService(@Qualifier("fakeDao") StudentDao studentDao, final StudentRepository studentRepository) {
+	public StudentService(@Qualifier("fakeDao") StudentDao studentDao) {
 		this.studentDao = studentDao;
-		this.studentRepository = studentRepository;
+		// this.studentRepository = studentRepository;
 	}
 
 
