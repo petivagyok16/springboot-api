@@ -32,7 +32,7 @@ public class StudentService {
 	}
 
 	public Student getStudentById(UUID studentId) {
-		return this.studentDao.selectStudentById(studentId);
+		return this.studentRepository.getStudentById(studentId);
 	}
 
 	public List<Student> getAllStudents() {
