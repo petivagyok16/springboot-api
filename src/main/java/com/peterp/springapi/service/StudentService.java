@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("studentService")
 public class StudentService {
@@ -36,6 +37,7 @@ public class StudentService {
 
 	public Student updateStudentById(String studentId, Student newStudent) {
 		Student student = mongoTemplate.findById(studentId, Student.class);
+//		Optional<Student> student = studentRepository.findById(studentId); --> try this. Wont work because of Option <Student>. What can i do to make it work?
 
 		if (student != null) {
 			student.setCourse(newStudent.getCourse());
