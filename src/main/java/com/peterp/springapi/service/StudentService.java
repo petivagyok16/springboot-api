@@ -27,7 +27,7 @@ public class StudentService {
 		if (student != null) {
 			return student;
 		} else {
-			throw new StudentNotFoundException("Student not found with id: " + studentId);
+			throw new StudentNotFoundException("Student is not found with id: " + studentId);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class StudentService {
 
 			return this.studentRepository.save(student);
 		} else {
-			throw new StudentNotFoundException("Student not found with id: " + studentId);
+			throw new StudentNotFoundException("Student is not found with id: " + studentId);
 		}
 
 	}
@@ -56,7 +56,7 @@ public class StudentService {
 		if (student != null) {
 			this.studentRepository.delete(student);
 		} else {
-			throw new StudentNotFoundException("Student not found with id: " + studentId);
+			throw new StudentNotFoundException("Student is not found with id: " + studentId);
 		}
 	}
 
