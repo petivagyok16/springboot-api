@@ -3,19 +3,16 @@ package com.peterp.springapi.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 
-import java.util.UUID;
-
 public class Student {
 
 	@Id
-	public UUID id;
-
-	private final String firstName;
-	private final String lastName;
-	private final String course;
+	private String id;
+	private String firstName;
+	private String lastName;
+	private String course;
 
 	public Student(
-					@JsonProperty("id") UUID id,
+					@JsonProperty("id") String id,
 					@JsonProperty("firstName") String firstName,
 					@JsonProperty("lastName") String lastName,
 					@JsonProperty("course") String course
@@ -25,11 +22,23 @@ public class Student {
 		this.course = course;
 	}
 
-	public UUID getId() {
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setCourse(String course) {
+		this.course = course;
+	}
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

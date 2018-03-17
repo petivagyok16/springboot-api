@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/students")
@@ -31,7 +31,7 @@ public class StudentController {
 					produces = MediaType.APPLICATION_JSON_VALUE,
 					path = "{studentId}"
 	)
-	public Student getStudentById(@PathVariable("studentId") UUID studentId) {
+	public Optional<Student> getStudentById(@PathVariable("studentId") String studentId) {
 		return this.studentService.getStudentById(studentId);
 	}
 
@@ -40,7 +40,7 @@ public class StudentController {
 					produces = MediaType.APPLICATION_JSON_VALUE
 	)
 	public void insertNewStudent(@RequestBody Student student) {
-		this.studentService.addNewStudent(null, student);
+		this.studentService.addNewStudent(student);
 	}
 
 	@RequestMapping(
@@ -56,7 +56,7 @@ public class StudentController {
 					produces = MediaType.APPLICATION_JSON_VALUE,
 					path = "{studentId}"
 	)
-	public int deleteStudentById(@PathVariable("studentId") UUID studentId) {
+	public int deleteStudentById(@PathVariable("studentId") String studentId) {
 		return this.studentService.deleteStudentById(studentId);
 	}
 }
