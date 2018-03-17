@@ -1,55 +1,61 @@
 package com.peterp.springapi.service;
 
+import com.peterp.springapi.exceptions.StudentNotFoundException;
 import com.peterp.springapi.repository.StudentRepository;
 import com.peterp.springapi.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service("studentService")
 public class StudentService {
 
-	private final StudentRepository studentRepository;
-
-	@Autowired
-	public StudentService(StudentRepository studentRepository) {
-		this.studentRepository = studentRepository;
-	}
+	@Autowired private StudentRepository studentRepository;
+	@Autowired private MongoTemplate mongoTemplate;
 
 
 	public Student addNewStudent(Student student) {
 		return this.studentRepository.save(student);
 	}
 
-	public Optional<Student> getStudentById(String studentId) {
-		return this.studentRepository.findById(studentId);
+	public Student getStudentById(String studentId) {
+		Student student = mongoTemplate.findById(studentId, Student.class);
+
+		if (student != null) {
+			return student;
+		} else {
+			throw new StudentNotFoundException("Student not found with id: " + studentId);
+		}
 	}
 
 	public List<Student> getAllStudents() {
 		return this.studentRepository.findAll();
 	}
 
-	public int updateStudentById(String studentId, Student newStudent) {
-//		return this.studentDao.updateStudentById(studentId, newStudent);
-		Optional <Student> student = this.getStudentById(studentId);
-//		return this.studentRepository.updateStudentById(studentId, newStudent);
-		return 1; // TODO: start here
-	}
+	public Student updateStudentById(String studentId, Student newStudent) {
+		Student student = mongoTemplate.findById(studentId, Student.class);
 
-	public int deleteStudentById(String studentId) {
-		Optional<Student> student = getStudentById(studentId);
+		if (student != null) {
+			student.setCourse(newStudent.getCourse());
+			student.setFirstName(newStudent.getFirstName());
+			student.setLastName(newStudent.getLastName());
 
-		if (student == null) {
-			System.out.println("Cannot find student. Handle error.");
-			return 0;
-
+			return this.studentRepository.save(student);
 		} else {
-//			return this.studentDao.deleteStudentById(studentId);
-			return 0;
+			throw new StudentNotFoundException("Student not found with id: " + studentId);
 		}
 
+	}
+
+	public void deleteStudentById(String studentId) {
+		Student student = this.getStudentById(studentId);
+		if (student != null) {
+			this.studentRepository.delete(student);
+		} else {
+			throw new StudentNotFoundException("Student not found with id: " + studentId);
+		}
 	}
 
 }

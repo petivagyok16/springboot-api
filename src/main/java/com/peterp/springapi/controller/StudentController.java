@@ -2,11 +2,11 @@ package com.peterp.springapi.controller;
 
 import com.peterp.springapi.model.Student;
 import com.peterp.springapi.service.StudentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/students")
@@ -31,7 +31,7 @@ public class StudentController {
 					produces = MediaType.APPLICATION_JSON_VALUE,
 					path = "{studentId}"
 	)
-	public Optional<Student> getStudentById(@PathVariable("studentId") String studentId) {
+	public Student getStudentById(@PathVariable("studentId") String studentId) {
 		return this.studentService.getStudentById(studentId);
 	}
 
@@ -39,16 +39,19 @@ public class StudentController {
 					method = RequestMethod.POST,
 					produces = MediaType.APPLICATION_JSON_VALUE
 	)
+	@ResponseStatus(HttpStatus.CREATED)
 	public void insertNewStudent(@RequestBody Student student) {
 		this.studentService.addNewStudent(student);
 	}
 
 	@RequestMapping(
 					method = RequestMethod.PUT,
-					produces = MediaType.APPLICATION_JSON_VALUE
+					produces = MediaType.APPLICATION_JSON_VALUE,
+					path = "{studentId}"
 	)
-	public int updateStudent(@RequestBody Student student) {
-		return this.studentService.updateStudentById(student.getId(), student);
+	@ResponseStatus(HttpStatus.OK)
+	public Student updateStudent(@RequestBody Student student, @PathVariable("studentId") String studentId) {
+		return this.studentService.updateStudentById(studentId, student);
 	}
 
 	@RequestMapping(
@@ -56,7 +59,8 @@ public class StudentController {
 					produces = MediaType.APPLICATION_JSON_VALUE,
 					path = "{studentId}"
 	)
-	public int deleteStudentById(@PathVariable("studentId") String studentId) {
-		return this.studentService.deleteStudentById(studentId);
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteStudentById(@PathVariable("studentId") String studentId) {
+		this.studentService.deleteStudentById(studentId);
 	}
 }
