@@ -1,5 +1,5 @@
 ### SpringBoot Students API
-A [b]Maven[/b] project.
+A **Maven** project.
 
 A simple CRUD API made for Spring Boot and Java learning purposes.
 
